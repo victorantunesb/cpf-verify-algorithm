@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        * { 
+            font-family: 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            margin: 0px;
+            box-sizing: border-box;
+        }
+
+        div{
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            height: 96vh;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 110px;
+            justify-content: center; 
+            text-align: center;       
+        }
+        #input-cpf {
+            background-repeat: no-repeat;
+            background-size: 15px;
+            background-position: 100%;
+        }
+
+    </style>
+</head>
+<body>
+    <div>
+        <form action="">
+            <label for="input-cpf"><b>Verificador de CPF</b></label>
+            <input id="input-cpf" type="text" placeholder="Insira o CPF" checked>
+            <button id="btn" type="button">Verificar</button>
+        </form>
+    </div>    
+
+
+    <script>
+
+        let input = document.querySelector('#input-cpf')
+        let btn = document.querySelector('#btn')
+
+
+        function validateCpf(cpf){
+            let firstDigitsum = 0;
+            let secondDigitsum = 0;
+        let lastButOneDigit = 0;
+     
+        let cleancpf = cpf.replaceAll(/[^0-9]/g,"");
+     
+        arraycpf = cleancpf.split('');   
+         
+        for (let index = 0 ; index < arraycpf.length - 2; index++) {
+           arrayMultiply = [10,9,8,7,6,5,4,3,2]
+           firstDigitsum += (arrayMultiply[index] * arraycpf[index])   
+        };     
+        
+        let formLastButOne = 11 - (firstDigitsum % 11);
+
+     
+        (formLastButOne < 9) ? lastButOneDigit = formLastButOne : lastButOneDigit = 0;
+        
+        let arraycpfConference = new Array();
+     
+        arraycpfConference = [...arraycpf.slice(0,9)];
+     
+        arraycpfConference.push(lastButOneDigit.toString())
+        
+        for (let index = 0 ; index < arraycpf.length - 1; index++) {
+           arrayMultiply = [11,10,9,8,7,6,5,4,3,2]
+           secondDigitsum += (arrayMultiply[index] * arraycpf[index]) 
+        };
+     
+        let formLast = 11 - (secondDigitsum % 11);
+     
+   
+        (formLast < 9) ? lastDigit = formLast : lastDigit = 0;
+     
+        arraycpfConference.push(lastDigit.toString());
+     
+        return (arraycpfConference.toString() === arraycpf.toString()) ? 
+        
+        input.style.backgroundImage = 'url(assets/right.png)' : input.style.backgroundImage = 'url(assets/wrong.png)';
+        }   
+        
+        btn.addEventListener('click', valueText = () => {
+            let cpf = input.value;
+            
+            console.log(validateCpf(cpf))
+
+            input.value = ''
+            
+        })
+        
+        </script>
+
+
+            
+
+        
+        
+    
+</body>
+</html>
